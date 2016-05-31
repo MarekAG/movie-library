@@ -41,4 +41,3 @@
   }
   System.config(config);
 })(this);
-
