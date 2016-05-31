@@ -33,7 +33,7 @@
     "bootstrap": "^3.3.6"
   },
   "devDependencies": {
-    "angular-ui-router": "^1.0.0-alpha3",
+    "angular-ui-router": "^1.0.0-alpha.3",
     "concurrently": "^2.0.0",
     "lite-server": "^2.2.0",
     "typescript": "^1.8.10",
