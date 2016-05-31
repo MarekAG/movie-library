@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-export class Movie {
-    id: number;
-    name: string;
-}
+import { Movie } from './movie';
+
 @Component({
     selector: 'my-app',
     template:`
