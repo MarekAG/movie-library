@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Movie } from './movie';
-
+import { MovieDetailComponent } from './movie-detail.component';
+import { MovieService } from './movie.service';
 @Component({
     selector: 'my-app',
     template:`
     <h1>{{title}}</h1>
-    <h2>My movies</h2>
+    <h2>My Movies</h2>
     <ul class="movies">
       <li *ngFor="let movie of movies"
         [class.selected]="movie === selectedMovie"
@@ -13,16 +14,9 @@ import { Movie } from './movie';
         <span class="badge">{{movie.id}}</span> {{movie.name}}
       </li>
     </ul>
-    <div *ngIf="selectedMovie">
-      <h2>{{selectedMovie.name}} details!</h2>
-      <div><label>id: </label>{{selectedMovie.id}}</div>
-      <div>
-        <label>name: </label>
-        <input [(ngModel)]="selectedMovie.name" placeholder="name"/>
-      </div>
-    </div>
+    <my-movie-detail [movie]="selectedMovie"></my-movie-detail>
   `,
-    styles:[`
+    styles: [`
     .selected {
       background-color: #CFD8DC !important;
       color: white;
@@ -70,23 +64,20 @@ import { Movie } from './movie';
       margin-right: .8em;
       border-radius: 4px 0 0 4px;
     }
-  `]
+  `],
+    directives: [MovieDetailComponent],
+    providers: [MovieService]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     title = 'Movie Library';
-    movies = MOVIES;
+    movies: Movie[];
     selectedMovie: Movie;
+    constructor(private movieService: MovieService) { }
+    getMovies() {
+        this.movieService.getMovies().then(movies => this.movies = movies);
+    }
+    ngOnInit() {
+        this.getMovies();
+    }
     onSelect(movie: Movie) { this.selectedMovie = movie; }
 }
-var MOVIES: Movie[] = [
-    { "id": 1, "name": "Titanic" },
-    { "id": 2, "name": "Matrix" },
-    { "id": 3, "name": "Django" },
-    { "id": 4, "name": "Fight Club" },
-    { "id": 5, "name": "Avatar" },
-    { "id": 6, "name": "Spiderman" },
-    { "id": 7, "name": "Robocop" },
-    { "id": 8, "name": "X-Men" },
-    { "id": 9, "name": "The Godfather" },
-    { "id": 10, "name": "Forrest Gump" }
-];
