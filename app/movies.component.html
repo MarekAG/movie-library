@@ -5,7 +5,12 @@
         [class.selected]="movie === selectedMovie"
         (click)="onSelect(movie)">
         <span class="badge">{{movie.id}}</span> {{movie.name}}
+        <button class="delete-button" (click)="delete(movie, $event)">Delete</button>
     </li>
+    <button (click)="addMovie()">Add new movie</button>
+    <div *ngIf="addingMovie">
+        <my-movie-detail (close)="close($event)"></my-movie-detail>
+    </div>
 </ul>
 <div *ngIf="selectedMovie">
     <h2>

@@ -12,6 +12,10 @@ import { Router } from '@angular/router-deprecated';
 export class MoviesComponent implements OnInit {
     movies: Movie[];
     selectedMovie: Movie;
+    addingMovie = false;
+    error: any;
+    
+
     constructor(private movieService: MovieService,
                 private router: Router) { }
 
@@ -25,5 +29,26 @@ export class MoviesComponent implements OnInit {
 
     gotoDetail() {
         this.router.navigate(['MovieDetail', { id: this.selectedMovie.id }]);
+    }
+
+    addMovie() {
+        this.addingMovie= true;
+        this.selectedMovie= null;
+    }
+
+    close(savedMovie: Movie) {
+        this.addingMovie = false;
+        if (savedMovie) { this.getMovies(); }
+    }
+
+    delete(movie: Movie, event: any) {
+        event.stopPropagation();
+        this.movieService
+            .delete(movie)
+            .then(res => {
+                this.movies = this.movies.filter(h => h !== movie);
+                if (this.selectedMovie === movie) { this.selectedMovie = null; }
+            })
+            .catch(error => this.error = error); // TODO: Display error message
     }
 }
