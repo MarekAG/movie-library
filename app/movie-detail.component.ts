@@ -1,19 +1,30 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { Movie } from './movie';
+import {RouteParams} from "@angular/router-deprecated";
+import {MovieService} from "./movie.service";
 @Component({
     selector: 'my-movie-detail',
-    template: `
-    <div *ngIf="movie">
-      <h2>{{movie.name}} details!</h2>
-      <div><label>id: </label>{{movie.id}}</div>
-      <div>
-        <label>name: </label>
-        <input [(ngModel)]="movie.name" placeholder="name"/>
-      </div>
-    </div>
-  `
+    templateUrl: 'app/movie-detail.component.html',
+    styleUrls: ['app/movie-detail.component.css']
+
 })
-export class MovieDetailComponent {
+export class MovieDetailComponent implements OnInit {
+
     @Input()
     movie: Movie;
+
+    constructor(
+        private movieService: MovieService,
+        private routeParams: RouteParams) {
+    }
+
+    ngOnInit() {
+        let id = +this.routeParams.get('id');
+        this.movieService.getMovie(id)
+            .then(movie => this.movie = movie);
+    }
+
+    goBack() {
+        window.history.back();
+    }
 }
