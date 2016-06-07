@@ -1,9 +1,9 @@
 import { Injectable }    from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
-import 'rxjs/add/operator/toPromise';
+import { Observable }     from 'rxjs/Observable';
 
-import { Movie } from './movie';
+import {Movie} from "./movie";
 
 @Injectable()
 export class MovieService {
@@ -12,19 +12,18 @@ export class MovieService {
 
     constructor(private http: Http) { }
 
-    getMovies(): Promise<Movie[]> {
+    getMovies(): Observable<Movie[]> {
         return this.http.get(this.moviesUrl)
-            .toPromise()
-            .then(response => response.json().data)
+            .map(response => response.json().data)
             .catch(this.handleError);
     }
 
     getMovie(id: number) {
         return this.getMovies()
-            .then(movies => movies.filter(movie => movie.id === id)[0]);
+            .map(movies => movies.filter(movie => movie.id === id)[0]);
     }
 
-    save(movie: Movie): Promise<Movie>  {
+    save(movie: Movie): Observable<Movie>  {
         if (movie.id) {
             return this.put(movie);
         }
@@ -39,18 +38,16 @@ export class MovieService {
 
         return this.http
             .delete(url, headers)
-            .toPromise()
             .catch(this.handleError);
     }
 
-    private post(movie: Movie): Promise<Movie> {
+    private post(movie: Movie): Observable<Movie> {
         let headers = new Headers({
             'Content-Type': 'application/json'});
 
         return this.http
             .post(this.moviesUrl, JSON.stringify(movie), {headers: headers})
-            .toPromise()
-            .then(res => res.json().data)
+            .map(res => res.json().data)
             .catch(this.handleError);
     }
 
@@ -62,13 +59,12 @@ export class MovieService {
 
         return this.http
             .put(url, JSON.stringify(movie), {headers: headers})
-            .toPromise()
-            .then(() => movie)
+            .map(() => movie)
             .catch(this.handleError);
     }
 
     private handleError(error: any) {
         console.error('An error occurred', error);
-        return Promise.reject(error.message || error);
+        return Observable.throw(error.message || error);
     }
 }

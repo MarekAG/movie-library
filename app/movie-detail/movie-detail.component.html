@@ -1,0 +1,45 @@
+<div *ngIf="movie">
+    <form (ngSubmit)="onSubmit()" #myForm="ngForm">
+
+<h2>{{movie.name}} {{movie.year}} {{movie.genre}} {{movie.director}} {{movie.rate}}</h2>
+    <div>
+        <label>name: </label>
+        <input type="text" placeholder="name" class="form-control" required pattern="[a-zA-Z0-9ąśłóćńężź ]{3,}[/-]?[a-zA-Z0-9ąśłóćńężź ]*$" [(ngModel)]="movie.name" ngControl="name"  #name="ngForm" >
+        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+        Film name minimum length is 3
+        </div>
+    </div>
+        <div>
+            <label>year: </label>
+            <input type="text" placeholder="year" class="form-control" required pattern="[1-9][0-9]{3}$" [(ngModel)]="movie.year" ngControl="year"  #year="ngForm" >
+            <div [hidden]="year.valid || year.pristine" class="alert alert-danger">
+                Year should have 4 numbers
+            </div>
+        </div>
+        <div>
+            <label>director: </label>
+            <input type="text" placeholder="director" class="form-control" required pattern="[a-zA-Z0-9ąśłóćńężź ]{3,}[/-]?[a-zA-Z0-9ąśłóćńężź ]*$"  [(ngModel)]="movie.director" ngControl="director"  #director="ngForm" >
+            <div [hidden]="director.valid || director.pristine" class="alert alert-danger">
+                Director name minimum length is 3
+            </div>
+        </div>
+        <div>
+            <label>genre: </label>
+            <input type="text" placeholder="genre" class="form-control" required pattern="[1-9][0-9]{3}$" [(ngModel)]="movie.genre" ngControl="genre"  #genre="ngForm" >
+            <div [hidden]="genre.valid || genre.pristine" class="alert alert-danger">
+                Genre minimum length is 3
+            </div>
+        </div>
+        <div>
+            <label>rate: </label>
+            <input type="text" placeholder="rate" class="form-control" required pattern="[0-5]$" [(ngModel)]="movie.rate" ngControl="rate"  #rate="ngForm" >
+            <div [hidden]="rate.valid || rate.pristine" class="alert alert-danger">
+                Rate should be from 0 to 5
+            </div>
+        </div>
+
+
+    <button type="submit" class="btn btn-warning" (click)="goBack()" name="back">Back</button>
+  <button type="submit" class="btn btn-success" [disabled]="!myForm.form.valid" (click)="save()">Save</button>
+    </form>
+</div>

@@ -1,9 +1,10 @@
 import { Component }       from '@angular/core';
-import { MovieService }     from './movie.service';
+import { MovieService }     from './movie/movie.service';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
-import {MoviesComponent} from "./movies.component";
-import {DashboardComponent} from "./dashboard.component";
-import {MovieDetailComponent} from "./movie-detail.component";
+import {MoviesComponent} from "./movies/movies.component";
+import {DashboardComponent} from "./dashboard/dashboard.component";
+import {MovieDetailComponent} from "./movie-detail/movie-detail.component";
+import "./rxjs-operators";
 
 @Component({
     selector: 'my-app',

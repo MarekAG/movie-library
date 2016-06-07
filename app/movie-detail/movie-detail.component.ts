@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Movie } from './movie';
+import { Movie } from '../movie/movie';
 import {RouteParams} from "@angular/router-deprecated";
-import {MovieService} from "./movie.service";
+import {MovieService} from "../movie/movie.service";
 
 @Component({
     selector: 'my-movie-detail',
-    templateUrl: 'app/movie-detail.component.html',
-    styleUrls: ['app/movie-detail.component.css']
+    templateUrl: 'app/movie-detail/movie-detail.component.html',
+    styleUrls: ['app/movie-detail/movie-detail.component.css']
 
 })
 export class MovieDetailComponent implements OnInit {
@@ -26,7 +26,7 @@ export class MovieDetailComponent implements OnInit {
             let id = +this.routeParams.get('id');
             this.navigated = true;
             this.movieService.getMovie(id)
-                .then(movie => this.movie = movie);
+                .subscribe(movie => this.movie = movie);
         } else {
             this.navigated = false;
             this.movie = new Movie();
@@ -36,11 +36,10 @@ export class MovieDetailComponent implements OnInit {
     save() {
         this.movieService
             .save(this.movie)
-            .then(movie => {
+            .subscribe(movie => {
                 this.movie = movie;
                 this.goBack(movie);
-            })
-            .catch(error => this.error = error);
+            }, error => this.error = error);
     }
 
     goBack(savedMovie: Movie = null) {

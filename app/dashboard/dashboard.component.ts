@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router-deprecated';
-import { Movie } from './movie';
-import { MovieService } from './movie.service';
+import { Movie } from '../movie/movie';
+import { MovieService } from '../movie/movie.service';
 @Component({
     selector: 'my-dashboard',
-    templateUrl: 'app/dashboard.component.html',
-    styleUrls: ['app/dashboard.component.css']
+    templateUrl: 'app/dashboard/dashboard.component.html',
+    styleUrls: ['app/dashboard/dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
     movies: Movie[] = [];
@@ -13,7 +13,7 @@ export class DashboardComponent implements OnInit {
                 private router: Router) { }
     ngOnInit() {
         this.movieService.getMovies()
-            .then(movies => this.movies = movies.slice(1,5));
+            .subscribe(movies => this.movies = movies.slice(1,5));
     }
 
     gotoDetail(movie: Movie) {
