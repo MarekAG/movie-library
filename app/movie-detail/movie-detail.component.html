@@ -25,7 +25,7 @@
         </div>
         <div>
             <label>genre: </label>
-            <input type="text" placeholder="genre" class="form-control" required pattern="[1-9][0-9]{3}$" [(ngModel)]="movie.genre" ngControl="genre"  #genre="ngForm" >
+            <input type="text" placeholder="genre" class="form-control" required pattern="[a-zA-Z0-9ąśłóćńężź ]{3,}[/-]?[a-zA-Z0-9ąśłóćńężź ]*$" [(ngModel)]="movie.genre" ngControl="genre"  #genre="ngForm" >
             <div [hidden]="genre.valid || genre.pristine" class="alert alert-danger">
                 Genre minimum length is 3
             </div>

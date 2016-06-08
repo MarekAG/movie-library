@@ -13,7 +13,7 @@ export class DashboardComponent implements OnInit {
                 private router: Router) { }
     ngOnInit() {
         this.movieService.getMovies()
-            .subscribe(movies => this.movies = movies.slice(1,5));
+            .subscribe(movies => this.movies = movies.filter(movie => movie.rate > 3));
     }
 
     gotoDetail(movie: Movie) {

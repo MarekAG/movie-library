@@ -12,9 +12,9 @@
         <my-movie-detail (close)="close($event)"></my-movie-detail>
     </div>
 </ul>
-<div *ngIf="selectedMovie">
+<div *ngIf="selectedMovie" class="selectedMovie">
     <h2>
-        {{selectedMovie.name | uppercase}}
+        {{selectedMovie.name | uppercase}} ({{selectedMovie.year}}) - {{selectedMovie.director}}
     </h2>
     <button (click)="gotoDetail()">View Details</button>
 </div>
